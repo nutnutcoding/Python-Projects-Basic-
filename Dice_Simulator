@@ -1,0 +1,57 @@
+import random
+import time
+count = 1
+
+
+def roll_ask():
+    roll = input("Roll the dice? (y/n): ")
+    if roll.lower() != 'y' and roll.lower() != 'n':
+        print('Invalid choice. Please input \'y\' for \'yes\' or \'n\' for \'no\'.\n')
+        roll_ask()
+    elif roll.lower() == 'y':
+        roll_dice()
+    else:
+        end_program()
+
+
+def roll_number():
+    try:
+        number = abs(int(input(
+            '\nAwesome! How many dice do you wish to roll? (provide a number): ')))
+        return number
+    except ValueError:
+        print('Invalid choice. Please use a digit on your number pad.')
+        roll_number()
+
+
+def roll_dice():
+    global count
+    number_track = 1
+    number = roll_number()
+    print(f'\nThis is dice-rolling round {count}.')
+    time.sleep(0.5)
+    if number == 1:
+        print('The result is...\n')
+    else:
+        print('The results are...\n')
+    time.sleep(random.uniform(0.5, 3.5))
+    while number_track != (number + 1):
+        print(f'Dice {number_track}: ' + str(random.randint(1, 6)))
+        number_track += 1
+    count += 1
+    print('\n')
+    roll_ask()
+
+
+def end_program():
+    print('\nThanks for joining me! See you soon and enjoy your day!🎊\n')
+    print('\n' + '🎲' * 15 + '\n')
+
+
+def run_program():
+    print('\n' + '🎲' * 15)
+    print('\nGreat to have you here!')
+    roll = roll_ask()
+
+
+run_program()
