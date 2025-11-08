@@ -1,0 +1,154 @@
+import random
+import time
+
+user_score = 0
+comp_score = 0
+user_total = 0
+comp_total = 0
+
+
+def roll():
+    score = random.randint(1, 6)
+    return score
+
+
+def comp_logic():
+    logic = random.randint(1, 100)
+    return logic
+
+
+def play_user():
+    global user_score
+    global user_total
+    while True:
+        user_roll = input("Roll the dice? (y/n): ")
+        print('\n')
+        if user_roll == 'y':
+            score = roll()
+            if score != 1:
+                user_score += score
+                print(
+                    f"You rolled a {score}! Your current score for this turn is {user_score}.")
+                continue
+            else:
+                user_score = 0
+                user_total += user_score
+                print(
+                    f"Bad luck, you rolled a 1! Your turn ends with a score of 0, but don't worry, it's not the end!")
+                return user_total
+        elif user_roll == 'n':
+            print(
+                f"You end your turn. Your score for this turn is {user_score}.\n")
+            user_total += user_score
+            return user_total
+        else:
+            print(
+                "Invalid input. Please press 'y' for 'yes' or 'n' for 'no', then press ENTER.\n")
+            continue
+
+
+def play_comp():
+    global comp_score
+    global comp_total
+    while True:
+        logic = comp_logic()
+        score = roll()
+        print("I choose to roll the dice.\n")
+        if score != 1:
+            comp_score += score
+            print(
+                f"I rolled a {score}! My current score for this turn is {comp_score}.")
+            print("Thinking...\n")
+            time.sleep(random.uniform(4, 8))
+            if comp_score >= 18:
+                if logic <= 95:
+                    print(
+                        f"I end my turn with a turn score of {comp_score}.")
+                    comp_total += comp_score
+                    return comp_total
+                else:
+                    continue
+            elif comp_score >= 6:
+                if logic <= 60:
+                    continue
+                else:
+                    print(
+                        f"I end my turn with a turn score of {comp_score}.")
+                    comp_total += comp_score
+                    return comp_total
+            else:
+                if logic <= 90:
+                    continue
+                else:
+                    print(f"I end my turn with a turn score of {comp_score}.")
+                    comp_total += comp_score
+                    return comp_total
+        else:
+            comp_score = 0
+            comp_total += comp_score
+            print(
+                f"Bad luck for me; I rolled a 1. My turn ends with a score of 0. Buy hey, I'll always come back!\n")
+            return comp_total
+
+
+def play():
+    global user_score
+    global comp_score
+    global user_total
+    global comp_total
+    turn_count = 1
+    while comp_total < 100 and user_total < 100:
+        user_score = 0
+        comp_score = 0
+        print("Your turn!")
+        user_total = play_user()
+        if user_total < 100:
+            print("\nMy turn!")
+            comp_total = play_comp()
+            print(
+                f'\n🔊Turn {turn_count} recap:\nYour Score--{user_total}\nMy Score--{comp_total}\n')
+            turn_count += 1
+            if comp_total < 100:
+                print(f'Let turn {turn_count} begin!\n')
+            else:
+                print("🏁 Match ends!")
+                print(
+                    f"\nI've reached a total score of {comp_total}. I win!!🎉🎉\nYou will, too--I have faith in you! 😃")
+        else:
+            print("\n🏁 Match ends!")
+            print(
+                f"\nCongratulations! You've reached a total score of {user_total}. You win!!🎉🎉")
+    print("\n")
+    play_choice()
+
+
+def goodbye():
+    print("Thanks for joining me! See you soon! 🎊")
+    print('\n' + '🐷🎲' * 10 + '\n')
+
+
+def play_choice():
+    global user_total
+    global comp_total
+    user_total = 0
+    comp_total = 0
+    start_choice = input('Begin a game? (y/n): ').lower()
+    if start_choice == 'y':
+        print('\n')
+        play()
+    elif start_choice == 'n':
+        print('\n')
+        goodbye()
+    else:
+        print(
+            "Invalid input. Please press 'y' for 'yes' or 'n' for 'no', then press ENTER.\n")
+        play_choice()
+
+
+def program_start():
+    print('\n' + '🐷🎲' * 10 + '\n')
+    print("Welcome to Pig Dice! Roll dices and be the first to score 100 points.\nOne can roll infinite times, but if one scores 1, one's score turns 0 for that turn; be strategic!\n")
+    play_choice()
+
+
+program_start()
