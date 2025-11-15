@@ -1,0 +1,50 @@
+print("\n" + "🔢" * 20 + "\n")
+print("Welcome to the Student Performance Tracker!\n")
+
+while True:
+    n = int(input("Number of students?: "))
+    school = []
+
+    for i in range(1, n+1):
+        print("\n")
+        name = input(f"Name: ")
+        score1 = int(input("Score 1: "))
+        score2 = int(input("Score 2: "))
+        score3 = int(input("Score 3: "))
+        average = (score1 + score2 + score3) / 3
+        if average < 60:
+            grade = "F"
+        elif 60 <= average < 70:
+            grade = "D"
+        elif 70 <= average < 80:
+            grade = "C"
+        elif 80 <= average < 90:
+            grade = "B"
+        elif average >= 90:
+            grade = "A"
+        school.append({"Student": name,
+                       "Score": [score1, score2, score3],
+                       "Average": average,
+                       "Grade": grade
+                       })
+
+    print("\n🎇\n")
+
+    count = 1
+    for i in school:
+        count += 1
+        print(
+            f"Name: {i['Student']}\nScores: {i['Score']}\nAverage: {i['Average']}\nGrade: {i['Grade']}")
+        print("----------")
+
+    print("\n🎇\n")
+
+    request = input("Continue? (y/n): ").lower()
+    if request == "y":
+        continue
+    else:
+        break
+
+print("\nThanks for joining me!")
+
+print("\n" + "🔢" * 20 + "\n")
