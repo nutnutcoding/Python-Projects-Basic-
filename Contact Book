@@ -1,0 +1,136 @@
+def display():
+    print("\n" + "📞"*20 + "\n")
+    print("Welcome to the Contact Book!\n")
+    print("Menu:\nAdd a contact (1)\nView a contact (2)\nEdit a contact (3)\nDelete a contact (4)\nList all contacts (5)\nExit the program (6)\n")
+
+
+def add():
+    global book
+    contact = input("\nContact to add: ")
+    if contact in book:
+        print(
+            f"\n{contact} already exists in the contact book. Try viewing the contact.\n")
+        action()
+    else:
+        phone = input(f"{contact}'s phone number: ")
+        email = input(f"{contact}'s email: ")
+        address = input(f"{contact}'s address: ")
+        book[contact] = {"Phone": phone, "Email": email, "Address": address}
+        print("\n✅ Contact successfully added! ✅\n")
+        action()
+
+
+def view():
+    global book
+    contact = input("Choose a contact to view: ")
+    if book == {}:
+        print("The contact book is empty. Try adding some contacts.\n")
+        action()
+    elif contact not in book:
+        print("Contact not found. Try adding it into the contact book.\n")
+        action()
+    else:
+        print("\n🔎 Viewing Contact 🔎")
+        print(f"Name: {contact}")
+        for key, value in book[contact].items():
+            print(f"{key}: {value}")
+        print('\n')
+        action()
+
+
+def edit():
+    global book
+    if book == {}:
+        print("The contact book is empty. Try adding some contacts.\n")
+        action()
+    else:
+        contact = input("Contact to edit?: ")
+        if contact not in book:
+            print("Contact not found. Try adding it into the contact book.\n")
+            action()
+        else:
+            phone = input("Current phone? (ENTER if unchanged): ")
+            email = input("Current email? (ENTER if unchanged): ")
+            address = input("Current address? (ENTER if unchanged): ")
+            if phone.strip():
+                book[contact]["Phone"] = phone
+            if email.strip():
+                book[contact]["Email"] = email
+            if address.strip():
+                book[contact]["Address"] = address
+            print("\n📝 All changes made! 📝\n")
+            action()
+
+
+def delete():
+    global book
+    if book == {}:
+        print("The contact book is empty. Try adding some contacts.\n")
+        action()
+    else:
+        contact = input("Contact to delete?: ")
+        if contact not in book:
+            print(
+                "The contact is not in the book. Try adding it into the contact book.\n")
+            action()
+        else:
+            del book[contact]
+            print("\n🚮 Contact successfully deleted! 🚮\n")
+            action()
+
+
+def list_all():
+    global book
+    if book == {}:
+        print("The contact book is empty. Try adding some contacts.\n")
+        action()
+    else:
+        print("📚----Contact Book Begins----📚\n")
+        for key, value in book.items():
+            print(f"Name: {key}")
+            for a, b in book[key].items():
+                print(f"{a}: {b}")
+            print("-" * 20)
+        print("\n📚----Contact Book Ends----📚\n")
+        action()
+
+
+def exit_program():
+    global book
+    print("\nThanks for joining me. See you soon!")
+    print("\n" + "📞"*20 + "\n")
+
+
+def error():
+    global book
+    print("\nAction unavailable. Please choose from Action 1 to 6.\n")
+    action()
+
+
+def action():
+    global book
+    choice = input("Choose an action (1 to 6): ")
+    if choice == "1":
+        add()
+    elif choice == "2":
+        view()
+    elif choice == "3":
+        edit()
+    elif choice == "4":
+        delete()
+    elif choice == "5":
+        list_all()
+    elif choice == "6":
+        exit_program()
+    else:
+        error()
+
+
+def main():
+    global book
+    display()
+    book = {}
+    action()
+
+
+main()
